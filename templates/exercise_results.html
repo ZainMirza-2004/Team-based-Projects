@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <h1>Exercise Results</h1>
+    <div id="exercise-details">
+        {% if data %}
+            <h2>{{ data.name }}</h2>
+            <p><strong>Duration:</strong> {{ data.duration_min }} minutes</p>
+            <p><strong>Calories Burned:</strong> {{ data.nf_calories }}</p>
+            <!-- Add more details as needed -->
+        {% else %}
+            <p>No exercise information found.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

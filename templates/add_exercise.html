@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Exercise</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <h1>Add Exercise</h1>
+    <form action="/add_exercise" method="POST">
+        <label for="exercise_name">Exercise Name:</label>
+        <input type="text" id="exercise_name" name="exercise_name" required>
+        <button type="submit" class="button">Search Exercise</button>
+    </form>
+
+    <div id="exercise-results">
+        <!-- Exercise results will be rendered here -->
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

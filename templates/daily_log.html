@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Log</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <h1>Daily Log</h1>
+    <ul>
+        {% for item in log %}
+        <li>
+            <strong>{{ item.food_name }}</strong>: 
+            {{ item.serving_size }} {{ item.serving_unit }},
+            {{ item.calories }} calories, 
+            {{ item.protein }}g protein, 
+            {{ item.fat }}g fat, 
+            {{ item.carbs }}g carbs
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

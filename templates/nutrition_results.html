@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrition Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <h1>Nutrition Information</h1>
+    <div class="nutrition-details">
+        {% if data.foods %}
+            {% set food = data.foods[0] %}
+            <h2>{{ food.food_name }}</h2>
+            <p><strong>Serving Size:</strong> 
+                <input type="number" id="serving-qty" value="{{ food.serving_qty }}" min="1"> 
+                <select id="serving-unit">
+                    <option value="grams">grams</option>
+                    <option value="ounces">ounces</option>
+                    <option value="pounds">pounds</option>
+                    <option value="tablespoons">tablespoons</option>
+                    <option value="teaspoons">teaspoons</option>
+                </select> 
+                ({{ food.serving_weight_grams }} grams)
+            </p>
+            <p><strong>Calories:</strong> <span id="calories">{{ food.nf_calories }}</span></p>
+            <p><strong>Total Fat:</strong> <span id="total-fat">{{ food.nf_total_fat }}</span>g</p>
+            <p><strong>Saturated Fat:</strong> <span id="saturated-fat">{{ food.nf_saturated_fat }}</span>g</p>
+            <p><strong>Cholesterol:</strong> <span id="cholesterol">{{ food.nf_cholesterol }}</span>mg</p>
+            <p><strong>Sodium:</strong> <span id="sodium">{{ food.nf_sodium }}</span>mg</p>
+            <p><strong>Total Carbohydrates:</strong> <span id="total-carbs">{{ food.nf_total_carbohydrate }}</span>g</p>
+            <p><strong>Dietary Fiber:</strong> <span id="dietary-fiber">{{ food.nf_dietary_fiber }}</span>g</p>
+            <p><strong>Sugars:</strong> <span id="sugars">{{ food.nf_sugars }}</span>g</p>
+            <p><strong>Protein:</strong> <span id="protein">{{ food.nf_protein }}</span>g</p>
+            <img src="{{ food.photo.thumb }}" alt="{{ food.food_name }}">
+            <button type="button" class="add-to-log-button" 
+                    data-food-name="{{ food.food_name }}" 
+                    data-serving-qty="{{ food.serving_qty }}" 
+                    data-serving-unit="{{ food.serving_unit }}" 
+                    data-calories="{{ food.nf_calories }}" 
+                    data-protein="{{ food.nf_protein }}" 
+                    data-fat="{{ food.nf_total_fat }}" 
+                    data-carbs="{{ food.nf_total_carbohydrate }}"
+                    data-serving-weight-grams="{{ food.serving_weight_grams }}">
+                Add to Log
+            </button>
+        {% else %}
+            <p>No nutritional information found.</p>
+        {% endif %}
+    </div>
+    <script src="{{ url_for('static', filename='js/nutrition_results.js') }}"></script>
+</body>
+</html>
