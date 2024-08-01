@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calorie and Fitness Tracker</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Calorie and Fitness Tracker</title>
 </head>
 <body>
+    <div class="container">
     <h1>Calorie and Fitness Tracker</h1>
     
     <div class="button-group">
@@ -14,7 +15,169 @@
         <a href="/add_exercise" class="button">Add Exercise</a>
         <a href="/daily_log" class="button">View Daily Log</a>
     </div>
+</div>
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <div>
+        <button class="FoodB" type="button"><img src="../static/css/protein.png" alt="Protein"> Protein</button>
+        <button class="FoodB" type="button"><img src="../static/css/fat.png" alt="Fats"> Fats</button>
+        <button class="FoodB" type="button"><img src="../static/css/carbs.png" alt="Carbs"> Carbs</button>
+        <button class="FoodB" type="button"><img src="../static/css/water.png" alt="Water"> Water</button>
+      </div>
+      <div class="progress-bars">
+        <div class="progress-container">
+          <label>Protein:</label>
+          <div class="progress-bar" id="protein-bar"><div class="progress protein"></div></div>
+          <span id="protein-percent">0%</span>
+        </div>
+        <div class="progress-container">
+          <label>Fats:</label>
+          <div class="progress-bar" id="fats-bar"><div class="progress fats"></div></div>
+          <span id="fats-percent">0%</span>
+        </div>
+        <div class="progress-container">
+          <label>Carbs:</label>
+          <div class="progress-bar" id="carbs-bar"><div class="progress carbs"></div></div>
+          <span id="carbs-percent">0%</span>
+        </div>
+        <div class="progress-container">
+          <label>Water:</label>
+          <div class="progress-bar" id="water-bar"><div class="progress water"></div></div>
+          <span id="water-percent">0%</span>
+        </div>
+      </div>
+      <div class="food-list" id="food-list">
+        <h2>Foods Consumed</h2>
+        <h2>Total Calories in Food: <span id="total-calories">0</span></h2>
+        <div class="pie-container">
+          <!-- <div class="pie">
+            <div class="chart">
+              <canvas id="calorieChart" width="400" height="400"></canvas>
+            </div>
+            <div class="label">Calories Chart</div>
+          </div> -->
+          <div class="pie pie2">
+            <div class="hollow">
+              <div class="text-container">
+                <span class="value">12</span>
+                <span class="kcal">kcal</span>
+              </div>
+            </div>
+            <div class="label">Consumed</div>
+          </div>
+          <div class="pie pie3">
+            <div class="hollow">
+              <div class="text-container">
+                <span class="value">1200</span>
+                <span class="kcal">kcal</span>
+              </div>
+            </div>
+            <div class="label">Burned</div>
+          </div>
+          <div class="pie pie4">
+            <div class="hollow">
+              <div class="text-container">
+                <span class="value">1433</span>
+                <span class="kcal">kcal</span>
+              </div>
+            </div>
+            <div class="label">Remaining</div>
+          </div>
+        </div>
+        <h2>Calorie target: <span id="calorie-target">2000</span></h2>
+        <h2>Calories remaining: <span id="calories-remaining">1500</span></h2>
+        <div id="food-items"></div>
+      </div>
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const proteinBar = document.getElementById('protein-bar').querySelector('.progress');
+          const fatsBar = document.getElementById('fats-bar').querySelector('.progress');
+          const carbsBar = document.getElementById('carbs-bar').querySelector('.progress');
+          const waterBar = document.getElementById('water-bar').querySelector('.progress');
+    
+          const proteinPercent = document.getElementById('protein-percent');
+          const fatsPercent = document.getElementById('fats-percent');
+          const carbsPercent = document.getElementById('carbs-percent');
+          const waterPercent = document.getElementById('water-percent');
+    
+          const updateProgressBar = (bar, percentElement, value) => {
+            let sanitizedValue = Math.max(0, Math.min(100, value));
+            bar.style.width = sanitizedValue + '%';
+            percentElement.textContent = sanitizedValue + '%';
+          };
+    
+          // Example initial values, can be removed or updated as needed
+          updateProgressBar(proteinBar, proteinPercent, 50);
+          updateProgressBar(fatsBar, fatsPercent, 30);
+          updateProgressBar(carbsBar, carbsPercent, 70);
+          updateProgressBar(waterBar, waterPercent, 90);
+    
+          // Example buttons to update the progress bars (add real functionality as needed)
+          document.querySelectorAll('.FoodB').forEach(button => {
+            button.addEventListener('click', () => {
+              const type = button.textContent.toLowerCase();
+              let value = 0;
+              switch (type) {
+                case 'protein':
+                  value = parseInt(prompt('Enter new protein percentage:', '50'), 10);
+                  updateProgressBar(proteinBar, proteinPercent, value);
+                  break;
+                case 'fats':
+                  value = parseInt(prompt('Enter new fats percentage:', '30'), 10);
+                  updateProgressBar(fatsBar, fatsPercent, value);
+                  break;
+                case 'carbs':
+                  value = parseInt(prompt('Enter new carbs percentage:', '70'), 10);
+                  updateProgressBar(carbsBar, carbsPercent, value);
+                  break;
+                case 'water':
+                  value = parseInt(prompt('Enter new water percentage:', '90'), 10);
+                  updateProgressBar(waterBar, waterPercent, value);
+                  break;
+              }
+            });
+          });
+    
+          // Data for the doughnut chart
+          const calorieTarget = 2000;
+          const caloriesBurned = 500; // Update this value as needed
+          const caloriesRemaining = calorieTarget - caloriesBurned;
+    
+          // Render the doughnut chart
+          const ctx = document.getElementById('calorieChart').getContext('2d');
+          const calorieChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+              labels: ['Calories Burned', 'Calories Remaining'],
+              datasets: [{
+                data: [caloriesBurned, caloriesRemaining],
+                backgroundColor: ['#ff9999', '#66b3ff'],
+                hoverBackgroundColor: ['#ff6666', '#3399ff']
+              }]
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                legend: {
+                  display: true,
+                  position: 'bottom'
+                },
+                tooltip: {
+                  callbacks: {
+                    label: function(tooltipItem) {
+                      return tooltipItem.label + ': ' + tooltipItem.raw + ' kcal';
+                    }
+                  }
+                },
+                centerText: {
+                  display: true,
+                  text: `${caloriesBurned} kcal`
+                }
+              },
+              cutout: '75%' // This creates the hollow effect
+            }
+          });
+        });
+      </script>
 </body>
 </html>

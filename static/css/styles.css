@@ -6,18 +6,221 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background-color: #f8f9fa; /* Light gray background */
-    color: #343a40; /* Dark gray text color */
+    background: linear-gradient(to right, rgba(69, 69, 161, 0.648), rgba(95, 95, 174, 0.648));
+    font-family: 'Arial', sans-serif;
+    color: #f5f5f5;
+    text-align: center;
     padding: 20px;
+    margin: 0;
 }
+.container {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.pie-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .pie {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+  }
+  
+  .pie .chart {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .pie .hollow {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: conic-gradient(
+      deepskyblue 0% 25%,
+      orangered 25% 85%,
+      #FFFFFF 85%
+    );
+  }
+  
+  .pie2 .hollow {
+    background: conic-gradient(
+      deepskyblue 0% 25%,
+      orangered 25% 85%,
+      #FFFFFF 85%
+    );
+  }
+  
+  .pie3 .hollow {
+    background: conic-gradient(
+      lightgreen 0% 50%,
+      lightgrey 50%
+    );
+  }
+  
+  .pie4 .hollow {
+    background: conic-gradient(
+      lightcoral 0% 70%,
+      lightgrey 70%
+    );
+  }
+  
+  .hollow::after {
+    content: '';
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background-color: rgb(95, 95, 174);
+    border-radius: 50%;
+  }
+  
+  .text-container {
+    z-index: 1;
+  }
+  
+  .value {
+    font-size: 16pt;
+    font-weight: bold;
+  }
+  
+  .kcal {
+    font-size: 10pt;
+  }
+  
+  .label {
+    font-size: 12pt;
+    margin-top: 5px;
+    text-align: center;
+  }
+  
+  .FoodB {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    color: #f5f5f5;
+    background-color: #696969;
+    margin: 5px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.FoodB img {
+    width: 20px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.FoodB:hover {
+    background-color: #555555;
+    transform: scale(1.05);
+}
+
+.progress-bars {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.progress-container {
+    width: 80%;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+}
+
+.progress-container label {
+    display: block;
+    margin-bottom: 5px;
+    width: 100px;
+    color: #f5f5f5;
+}
+
+.progress-bar {
+    flex: 1;
+    background-color: #f3f3f3;
+    border-radius: 13px;
+    padding: 3px;
+    position: relative;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.progress-bar .progress {
+    height: 20px;
+    border-radius: 10px;
+    text-align: right;
+    padding: 0 10px;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.progress-bar .progress.protein {
+    background-color: #4caf50;
+}
+
+.progress-bar .progress.fats {
+    background-color: #ff9800;
+}
+
+.progress-bar .progress.carbs {
+    background-color: #03a9f4;
+}
+
+.progress-bar .progress.water {
+    background-color: #9c27b0;
+}
+
+#calorieChart {
+    display: inline-block;
+}
+
+.food-list {
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.food-list h2 {
+    margin: 20px 0;
+    color: #f5f5f5;
+}
+
+.percent-input {
+    width: 50px;
+    text-align: center;
+}
+
 
 h1, h2 {
     margin-bottom: 20px;
+    text-align: center;
 }
 
-a {
+a.button, button.button {
     display: inline-block;
     text-decoration: none;
     color: #fff;
@@ -25,12 +228,17 @@ a {
     padding: 10px 20px;
     margin-right: 10px;
     border-radius: 5px;
+    border: none; /* Remove default button border */
+    cursor: pointer; /* Add pointer cursor for buttons */
     transition: background-color 0.3s ease;
 }
 
-a:hover {
+a.button:hover, button.button:hover {
     background-color: #0056b3; /* Darker blue on hover */
 }
+
+
+
 
 ul {
     list-style-type: none;
@@ -43,6 +251,10 @@ li {
     margin-bottom: 10px;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.button-group{
+    text-align: center;
 }
 
 .button-container {
